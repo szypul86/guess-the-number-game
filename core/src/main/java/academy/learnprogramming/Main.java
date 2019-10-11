@@ -20,7 +20,7 @@ public class Main {
 
         //get number generator bean from context
         NumberGenerator numberGenerator
-                = context.getBean("numberGenerator", NumberGenerator.class);
+                = context.getBean(NumberGenerator.class);
 
         //call method next() to get a random number
         int number = numberGenerator.next();
@@ -30,8 +30,6 @@ public class Main {
         //get the game bean from context
         Game game = context.getBean(Game.class);
 
-        //call reset() method
-        game.reset();
 
         context.close();
     }

@@ -2,11 +2,18 @@ package academy.learnprogramming;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
+import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
+
+@Component
 public class GameImpl implements Game {
 
     private static final Logger logger = LoggerFactory.getLogger(GameImpl.class);
 
+    @Autowired
     private NumberGenerator numberGenerator;
     private int guessCount = 10;
     private int number;
@@ -16,13 +23,8 @@ public class GameImpl implements Game {
     private int remainingGuesses;
     private boolean validNumberRange = true;
 
-
-
-    //public methods
-   public void setNumberGenerator (NumberGenerator numberGenerator){
-       this.numberGenerator=numberGenerator;
-   }
-
+    //init
+    @PostConstruct
     @Override
     public void reset() {
         smallest = 0;
@@ -31,6 +33,11 @@ public class GameImpl implements Game {
         biggest = numberGenerator.getMaxNumber();
         number = numberGenerator.next();
         logger.debug("the number is {}", number);
+    }
+
+    @PreDestroy
+    public void preDestroy() {
+        logger.info("in Game preDestroy()");
     }
 
 
@@ -70,11 +77,11 @@ public class GameImpl implements Game {
 
         checkValidNumberRange();
         if (validNumberRange) {
-            if (guess>number){
-                biggest = guess-1;
+            if (guess > number) {
+                biggest = guess - 1;
             }
-            if (guess<number){
-                smallest = guess+1;
+            if (guess < number) {
+                smallest = guess + 1;
             }
         }
         remainingGuesses--;
@@ -88,16 +95,16 @@ public class GameImpl implements Game {
 
     @Override
     public boolean isGameWon() {
-        return guess==number;
+        return guess == number;
     }
 
     @Override
     public boolean isGameLost() {
-        return !isGameWon() && remainingGuesses <=0;
+        return !isGameWon() && remainingGuesses <= 0;
     }
 
     //private methods
-    private void checkValidNumberRange(){
+    private void checkValidNumberRange() {
         validNumberRange = (guess >= smallest) && (guess <= biggest);
     }
 }
