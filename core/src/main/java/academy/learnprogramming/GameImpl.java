@@ -8,16 +8,14 @@ import org.springframework.stereotype.Component;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 
-
+@Component
 public class GameImpl implements Game {
 
     private static final Logger logger = LoggerFactory.getLogger(GameImpl.class);
 
-    @Autowired
     private NumberGenerator numberGenerator;
-    @Autowired
-    @GuessCount
     private int guessCount;
+
     private int number;
     private int guess;
     private int smallest;
@@ -25,7 +23,12 @@ public class GameImpl implements Game {
     private int remainingGuesses;
     private boolean validNumberRange = true;
 
-    //init
+    @Autowired
+    public GameImpl(NumberGenerator numberGenerator,@GuessCount int guessCount) {
+        this.numberGenerator = numberGenerator;
+        this.guessCount = guessCount;
+    }
+
     @PostConstruct
     @Override
     public void reset() {
@@ -109,7 +112,6 @@ public class GameImpl implements Game {
         return !isGameWon() && remainingGuesses <= 0;
     }
 
-    //private methods
     private void checkValidNumberRange() {
         validNumberRange = (guess >= smallest) && (guess <= biggest);
     }

@@ -8,13 +8,18 @@ import org.springframework.stereotype.Component;
 import javax.annotation.PostConstruct;
 
 
-
+@Component
 public class MessageGeneratorImpl implements MessageGenerator{
 
     private static final Logger logger = LoggerFactory.getLogger(MessageGeneratorImpl.class);
 
+
+    private final Game game;
+
     @Autowired
-    private Game game;
+    public MessageGeneratorImpl(Game game) {
+        this.game = game;
+    }
 
     @PostConstruct
     public void confirmation(){
