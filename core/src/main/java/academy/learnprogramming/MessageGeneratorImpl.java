@@ -1,5 +1,6 @@
 package academy.learnprogramming;
 
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,11 +8,9 @@ import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 
-
+@Slf4j
 @Component
 public class MessageGeneratorImpl implements MessageGenerator{
-
-    private static final Logger logger = LoggerFactory.getLogger(MessageGeneratorImpl.class);
 
 
     private final Game game;
@@ -23,12 +22,12 @@ public class MessageGeneratorImpl implements MessageGenerator{
 
     @PostConstruct
     public void confirmation(){
-        logger.debug("the value of autowired game was: {}", game);
+        log.debug("the value of autowired game was: {}", game);
     }
 
     @Override
     public String getMainMessage() {
-        logger.info("Main message is being printed");
+        log.info("Main message is being printed");
         return "Number is between " +
                 game.getSmallest() +
                 " and "+game.getBiggest() +
@@ -37,7 +36,7 @@ public class MessageGeneratorImpl implements MessageGenerator{
 
     @Override
     public String getResultMessage() {
-        logger.info("Result message is being printed");
+        log.info("Result message is being printed");
         if (game.isGameWon()) {
             return "You guessed it. Congrats! The number was: "+ game.getNumber();
         } else if (game.isGameLost()) {

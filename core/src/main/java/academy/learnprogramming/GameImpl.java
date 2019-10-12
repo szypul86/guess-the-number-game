@@ -1,5 +1,9 @@
 package academy.learnprogramming;
 
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,23 +12,25 @@ import org.springframework.stereotype.Component;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 
+@Slf4j
+@Getter
 @Component
 public class GameImpl implements Game {
 
-    private static final Logger logger = LoggerFactory.getLogger(GameImpl.class);
-
+    @Getter(AccessLevel.NONE)
     private NumberGenerator numberGenerator;
     private int guessCount;
-
     private int number;
-    private int guess;
     private int smallest;
     private int biggest;
     private int remainingGuesses;
     private boolean validNumberRange = true;
 
+    @Setter
+    private int guess;
+
     @Autowired
-    public GameImpl(NumberGenerator numberGenerator,@GuessCount int guessCount) {
+    public GameImpl(NumberGenerator numberGenerator, @GuessCount int guessCount) {
         this.numberGenerator = numberGenerator;
         this.guessCount = guessCount;
     }
@@ -37,48 +43,12 @@ public class GameImpl implements Game {
         remainingGuesses = guessCount;
         biggest = numberGenerator.getMaxNumber();
         number = numberGenerator.next();
-        logger.debug("the number is {}", number);
+        log.debug("the number is {}", number);
     }
 
     @PreDestroy
     public void preDestroy() {
-        logger.info("in Game preDestroy()");
-    }
-
-
-    @Override
-    public int getNumber() {
-        return number;
-    }
-
-    @Override
-    public int getGuess() {
-        return guess;
-    }
-
-    @Override
-    public void setGuess(int guess) {
-        this.guess = guess;
-    }
-
-    @Override
-    public int getSmallest() {
-        return smallest;
-    }
-
-    @Override
-    public int getBiggest() {
-        return biggest;
-    }
-
-    @Override
-    public int getRemainingGuesses() {
-        return remainingGuesses;
-    }
-
-    @Override
-    public int getGuessCount() {
-        return guessCount;
+        log.info("in Game preDestroy()");
     }
 
     @Override
@@ -95,11 +65,6 @@ public class GameImpl implements Game {
         }
         remainingGuesses--;
 
-    }
-
-    @Override
-    public boolean isValidNumberRange() {
-        return validNumberRange;
     }
 
     @Override

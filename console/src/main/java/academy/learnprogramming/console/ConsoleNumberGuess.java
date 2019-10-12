@@ -2,19 +2,17 @@ package academy.learnprogramming.console;
 
 import academy.learnprogramming.Game;
 import academy.learnprogramming.MessageGenerator;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 
 import java.util.Scanner;
 
+@Slf4j
 @Component
+//@AllArgsConstructor - mogloby byc
 public class ConsoleNumberGuess {
-
-    private static final Logger logger = LoggerFactory.getLogger(ConsoleNumberGuess.class);
 
     private final Game game;
     private final MessageGenerator messageGenerator;
@@ -27,7 +25,7 @@ public class ConsoleNumberGuess {
 
     @EventListener(ContextRefreshedEvent.class)
     public void start() {
-        logger.info("Start --> Container ready to use.");
+        log.info("Start --> Container ready to use.");
 
         Scanner scanner = new Scanner(System.in);
 
