@@ -25,6 +25,7 @@ public class GameController {
 
     @GetMapping(GameMappings.PLAY)
     public String play(Model model){
+
         model.addAttribute(AttributeNames.MAIN_MESSAGE, gameService.getMainMessage());
         model.addAttribute(AttributeNames.RESULT_MESSAGE, gameService.getResultMessage());
         log.info("model = {}", model);
@@ -41,4 +42,11 @@ public class GameController {
         gameService.checkGuess(guess);
         return GameMappings.REDIRECT;
     }
+
+    @GetMapping(GameMappings.RESTART)
+    public String restart(){
+        gameService.reset();
+        return GameMappings.REDIRECT;
+    }
+
 }
