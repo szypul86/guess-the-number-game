@@ -14,7 +14,7 @@ public class RequestInterceptor implements HandlerInterceptor {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         log.debug("preHandle method called. handler ={}", handler);
         log.debug("URL={}", request.getRequestURL());
-        return false;
+        return true;
     }
 
     @Override
